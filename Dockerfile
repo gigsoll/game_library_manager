@@ -34,7 +34,8 @@ COPY --from=builder /app/.venv/lib/python3.14/site-packages/ /usr/local/lib/pyth
 
 # Copy app files
 WORKDIR /app
-COPY --chown=appuser:appuser . .
+COPY --chown=appuser:appuser ./game_library_manager/ .
+COPY --chown=appuser:appuser ./entrypoint.prod.sh .
 
 # Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
