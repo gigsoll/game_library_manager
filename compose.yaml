@@ -19,7 +19,7 @@ services:
             POSTGRES_USER: ${POSTGRES_USER}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
         volumes:
-            - postgres:/var/lib/postgresql/data
+            - postgres:/var/lib/postgresql/
         ports:
             - 5432:5432
         healthcheck:
@@ -30,6 +30,8 @@ services:
 
     backend:
         build: .
+        env_file:
+            - .env
         depends_on:
             db:
                 condition: service_healthy
@@ -46,11 +48,13 @@ services:
             - "traefik.http.routers.backend-api.rule=Host(`api.localhost`)"
             - "traefik.http.routers.backend-api.entrypoints=web"
             - "traefik.http.routers.backend-api.service=backend-svc"
-            - "traefik.http.routers.backend-api.middlewares=api-prefix"
             - "traefik.http.routers.backend-api.priority=2"
 
-            - "traefik.http.middlewares.api-prefix.addprefix.prefix=/api"
             - "traefik.http.services.backend-svc.loadbalancer.server.port=8000"
+        develop:
+            watch:
+                - path: ./game_library_manager/
+                  action: rebuild
 
 volumes:
     postgres:
