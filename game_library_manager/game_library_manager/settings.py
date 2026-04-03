@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+from django import core
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "core",
+    "api",
     "rest_framework.authtoken",
 ]
 
