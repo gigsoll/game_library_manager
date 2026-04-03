@@ -13,3 +13,5 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = ["rawg_id", "title", "cover_url", "genres"]
+
+    genres = GenreSerializer(many=True, read_only=True)
